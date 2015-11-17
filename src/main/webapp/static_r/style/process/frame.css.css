@@ -1,0 +1,45 @@
+.align-l {
+  text-align: left;
+}
+.mt25 {
+  margin-top: 25px;
+}
+.font-14 {
+  font-size: 14px;
+}
+.font-18 {
+  font-size: 18px;
+}
+.color-777 {
+  color: #777777 !important;
+}
+.color-fff {
+  color: #ffffff !important;
+}
+.clear {
+  clear: both;
+}
+/* 禁用响应式*/
+.am-container {
+  width: 1200px !important;
+  max-width: none;
+}
+.footer {
+  min-width: 1200px;
+  background: #2f2f2f;
+}
+.footer .sf-full-w {
+  background: #333;
+}
+.footer .sf-full-w p {
+  text-align: center;
+}
+.footer .sf-full-w .img-line {
+  margin: 0 0 10px;
+}
+.footer .declare-line {
+  color: #7f8c8d;
+  margin: 0;
+  padding: 15px 0;
+  border-top: 1px solid #3a3a3a;
+}

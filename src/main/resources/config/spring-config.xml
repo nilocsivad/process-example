@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.springframework.org/schema/c" xmlns:cache="http://www.springframework.org/schema/cache" xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang" xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring" xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		">
+
+	<context:property-placeholder location="classpath:config/datasource-mysql.properties" />
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" p:driverClassName="${jdbc.driverClassName}" p:url="${mysql.url}" p:username="${mysql.username}" p:password="${mysql.password}" />
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" p:dataSource-ref="dataSource" />
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="transactionFactory">
+			<!-- <bean class="org.apache.ibatis.transaction.managed.ManagedTransactionFactory" /> -->
+			<bean class="org.mybatis.spring.transaction.SpringManagedTransactionFactory" />
+		</property>
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:config/mybatis/**/DAL-*.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" p:sqlSessionFactoryBeanName="sqlSessionFactory" p:basePackage="com.iam_vip.process_example.dal" />
+
+	<context:component-scan base-package="com.iam_vip.process_example">
+		<context:exclude-filter type="regex" expression="com.iam_vip.process_example.action" />
+	</context:component-scan>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- 配置工具 -->
+	<bean class="com.iam_vip.process_example.rs.u.AppConfigUtil" scope="singleton">
+		<constructor-arg name="key" type="java.lang.String" value="value" />
+	</bean>
+
+	<!-- 过滤URL及对应Method -->
+	<bean class="com.iam_vip.process_example.rs.adapter.IgnoreMethods" scope="singleton">
+		<constructor-arg name="enable" value="false" />
+		<constructor-arg name="methods" type="java.util.List">
+			<list value-type="java.lang.String">
+
+				<value>com.iam_vip.process_example.action.process.HomeAction.index</value>
+
+				<value>com.iam_vip.process_example.action.process.one.ProcessOneAction.showProcessStart</value>
+				<value>com.iam_vip.process_example.action.process.one.ProcessOneAction.startProcessOne</value>
+				<value>com.iam_vip.process_example.action.process.one.ProcessOneAction.redeployProcessOne</value>
+			</list>
+		</constructor-arg>
+	</bean>
+
+</beans>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<!-- com.iam_vip.process_example.entity.system.EntityAccount -->
+<mapper namespace="com.iam_vip.process_example.dal.IDALAccount">
+    
+	<sql id="TABLE_NAME"> tbl_card_no </sql>
+	
+	<insert id="NewCardRecord" parameterType="com.iam_vip.process_example.entity.system.EntityAccount">
+		INSERT INTO 
+			<include refid="TABLE_NAME" />
+		(
+			cardNo,
+			recordDT
+			<if test="status != null and status != ''"> , status </if>
+		) VALUES (
+			#{cardNo},
+			#{recordDT}
+			<if test="status != null and status != ''"> , #{status} </if>
+		)
+	</insert>
+	
+	<select id="selectOneByCardNo" parameterType="java.lang.String" resultType="com.iam_vip.process_example.entity.system.EntityAccount">
+		SELECT
+			cardNo,
+			recordDT,
+			status 
+		FROM
+			<include refid="TABLE_NAME" />
+		WHERE cardNo = #{cardNo}
+		  AND status = 100
+		LIMIT 1
+	</select>
+
+</mapper>

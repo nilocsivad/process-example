@@ -1,0 +1,21 @@
+.wrap-box {
+  background: #fff;
+  padding: 40px 0;
+  color: #7f8c8d;
+}
+.wrap-box .about-color {
+  color: #34495e;
+}
+.wrap-box .about-title {
+  font-size: 140%;
+  padding: 10px 0;
+}
+.wrap-box img.proc {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+.wrap-box .start-proc {
+  display: block;
+  float: right;
+}

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.springframework.org/schema/c" xmlns:cache="http://www.springframework.org/schema/cache" xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang" xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring" xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		">
+
+	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+
+		<property name="dataSource" ref="dataSource" />
+		<property name="transactionManager" ref="transactionManager" />
+
+		<property name="databaseSchemaUpdate" value="true" />
+		<property name="jpaHandleTransaction" value="true" />
+		<property name="jpaCloseEntityManager" value="true" />
+		<property name="jobExecutorActivate" value="false" />
+
+		<property name="deploymentResources" value="classpath:com/iam_vip/process_example/action/process/*/*.bpmn" />
+		<property name="deploymentMode" value="single-resource" />
+
+		<property name="activityFontName" value="宋体" />
+		<property name="labelFontName" value="宋体" />
+	</bean>
+
+	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean" destroy-method="destroy">
+		<property name="processEngineConfiguration" ref="processEngineConfiguration" />
+	</bean>
+
+	<bean id="RepositoryService" factory-bean="processEngine" factory-method="getRepositoryService" />
+	<bean id="RuntimeService" factory-bean="processEngine" factory-method="getRuntimeService" />
+	<bean id="TaskService" factory-bean="processEngine" factory-method="getTaskService" />
+	<bean id="HistoryService" factory-bean="processEngine" factory-method="getHistoryService" />
+	<bean id="ManagementService" factory-bean="processEngine" factory-method="getManagementService" />
+	<bean id="IdentityService" factory-bean="processEngine" factory-method="getIdentityService" />
+
+</beans>

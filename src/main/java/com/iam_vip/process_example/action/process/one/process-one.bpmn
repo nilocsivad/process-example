@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="Process_One" name="审批流程" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="userTask_2_Upload"></sequenceFlow>
+    <userTask id="userTask_2_Upload" name="提交申请单"></userTask>
+    <userTask id="usertask_2_Verify" name="审核申请单"></userTask>
+    <sequenceFlow id="flow2" sourceRef="userTask_2_Upload" targetRef="usertask_2_Verify"></sequenceFlow>
+    <exclusiveGateway id="exclusiveGateway_2_Stop_Or_Back" name="Exclusive Gateway" default="flow_2_VerifyPass"></exclusiveGateway>
+    <sequenceFlow id="flow3" sourceRef="usertask_2_Verify" targetRef="exclusiveGateway_2_Stop_Or_Back"></sequenceFlow>
+    <sequenceFlow id="flow_2_VerifyBack" name="审批未通过" sourceRef="exclusiveGateway_2_Stop_Or_Back" targetRef="userTask_2_Upload">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${pass == false}
+]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_2_VerifyPass" sourceRef="exclusiveGateway_2_Stop_Or_Back" targetRef="endevent1"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Process_One">
+    <bpmndi:BPMNPlane bpmnElement="Process_One" id="BPMNPlane_Process_One">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="77.0" y="30.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="522.0" y="300.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="userTask_2_Upload" id="BPMNShape_userTask_2_Upload">
+        <omgdc:Bounds height="55.0" width="105.0" x="42.0" y="190.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask_2_Verify" id="BPMNShape_usertask_2_Verify">
+        <omgdc:Bounds height="55.0" width="105.0" x="280.0" y="190.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusiveGateway_2_Stop_Or_Back" id="BPMNShape_exclusiveGateway_2_Stop_Or_Back">
+        <omgdc:Bounds height="40.0" width="40.0" x="520.0" y="197.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="94.0" y="65.0"></omgdi:waypoint>
+        <omgdi:waypoint x="94.0" y="190.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="147.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="280.0" y="217.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="385.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="520.0" y="217.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow_2_VerifyBack" id="BPMNEdge_flow_2_VerifyBack">
+        <omgdi:waypoint x="540.0" y="197.0"></omgdi:waypoint>
+        <omgdi:waypoint x="539.0" y="119.0"></omgdi:waypoint>
+        <omgdi:waypoint x="94.0" y="119.0"></omgdi:waypoint>
+        <omgdi:waypoint x="94.0" y="190.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="100.0" x="271.0" y="101.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow_2_VerifyPass" id="BPMNEdge_flow_2_VerifyPass">
+        <omgdi:waypoint x="540.0" y="237.0"></omgdi:waypoint>
+        <omgdi:waypoint x="539.0" y="300.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
